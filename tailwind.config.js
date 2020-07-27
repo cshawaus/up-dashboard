@@ -4,7 +4,13 @@ module.exports = {
     './resources/js/**/*.vue',
   ],
 
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        'up': '#ff7a64',
+      },
+    },
+  },
 
   variants: {},
 

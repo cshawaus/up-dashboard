@@ -13,9 +13,7 @@ class DashboardController extends Controller
     {
         $accounts = Cache::remember('up.accounts', now()->addMinutes(10), function () {
             return Http::withToken(env('UP_YEAH_TOKEN'))
-                ->get('https://api.up.com.au/api/v1/accounts', [
-                    'page[size]' => 10,
-                ])
+                ->get('https://api.up.com.au/api/v1/accounts')
                 ->json();
         });
 

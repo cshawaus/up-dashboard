@@ -1,21 +1,18 @@
 <template>
-  <div class="container mx-auto pb-20 pt-12">
-    <h1 class="flex font-semibold items-center mb-16 text-4xl" style="color: #ff7a64;">
-      <img class="h-24 mr-6 w-24" src="/images/up-yeah-logo.jpg" alt="">
-      Accounts
-    </h1>
-
-    <div class="grid grid-cols-4 gap-4">
-      <div class="p-6 rounded shadow-lg" v-for="account in accounts.data" :key="account.id">
+  <layout title="Accounts">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="border border-opacity-75 border-up px-10 py-12 rounded" v-for="account in accounts.data" :key="account.id">
         <h2 class="font-bold text-lg">{{ account.attributes.displayName }}</h2>
         <p>{{ account.attributes.accountType }}</p>
         <p>{{ account.attributes.balance.value | formatBalance }}</p>
       </div>
     </div>
-  </div>
+  </layout>
 </template>
 
 <script>
+import Layout from '../Layout'
+
 const currencyFormatter = new Intl.NumberFormat('en-AU', {
   currency : 'AUD',
   style    : 'currency',
@@ -24,11 +21,12 @@ const currencyFormatter = new Intl.NumberFormat('en-AU', {
 export default {
   name: 'DashboardIndex',
 
+  components: {
+    Layout,
+  },
+
   props: {
-    accounts: {
-      required : true,
-      type     : Object,
-    },
+    accounts: Object,
   },
 
   filters: {
