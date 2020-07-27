@@ -1,8 +1,14 @@
+/.vscode
 /node_modules
+/public/css
 /public/hot
+/public/js
 /public/storage
+/public/mix-manifest.json
 /storage/*.key
 /vendor
+_ide_helper.php
+.DS_Store
 .env
 .env.backup
 .phpunit.result.cache

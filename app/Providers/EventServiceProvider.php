@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
@@ -29,6 +32,14 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        if (App::environment('local')) {
+            Event::listen(MigrationsEnded::class, function () {
+                Artisan::call('ide-helper:models', [
+                    '--nowrite'        => true,
+                    '--reset'          => true,
+                    '--no-interaction' => true,
+                ]);
+            });
+        }
     }
 }
