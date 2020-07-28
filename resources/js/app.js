@@ -11,7 +11,7 @@ new Vue({
       initialPage: JSON.parse(app.dataset.page),
 
       async resolveComponent(name) {
-        return import(/* webpackChunkName: "js/pages/[request]" */ `./Pages/${name}`)
+        return import(/* webpackChunkName: "js/pages/[request]" */ `./pages/${name}`)
           .then(module => module.default)
       },
     },

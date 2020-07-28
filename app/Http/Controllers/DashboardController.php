@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function overview()
     {
         $accounts = Cache::remember('up.accounts', now()->addMinutes(10), function () {
             return Http::withToken(env('UP_YEAH_TOKEN'))
@@ -17,7 +17,7 @@ class DashboardController extends Controller
                 ->json();
         });
 
-        return Inertia::render('Dashboard/Index', ['accounts' => $accounts])
-            ->withViewData(['title' => 'Up Dashboard']);
+        return Inertia::render('Dashboard/Overview', ['accounts' => $accounts])
+            ->withViewData(['title' => 'Overview']);
     }
 }

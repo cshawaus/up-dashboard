@@ -15,3 +15,16 @@ mix.js('resources/js/app.js', 'public/js')
   .postCss('resources/css/app.css', 'public/css', [
     require('tailwindcss'),
   ])
+
+/*
+ |--------------------------------------------------------------------------
+ | Hot Module Replacement
+ |--------------------------------------------------------------------------
+ */
+
+mix.options({
+  hmrOptions: {
+      host : process.env.APP_DOMAIN,
+      port : 8080,
+  },
+})

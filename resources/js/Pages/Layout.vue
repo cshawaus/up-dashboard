@@ -1,15 +1,17 @@
 <template>
-  <main class="bg-gray-900 overflow-y-auto text-white" scroll-region>
-    <header class="bg-white py-8 sticky top-0">
-      <div class="container mx-auto">
-        <h1 class="flex font-semibold items-center text-4xl text-up">
-          <img class="h-20 mr-6 w-20" src="/images/up-yeah-logo.jpg" alt="">
-          {{ title }}
-        </h1>
+  <main class="bg-gray-100 overflow-y-auto" scroll-region>
+    <header class="bg-white border-b-2 border-gray-200 py-6 sticky top-0">
+      <div class="container flex items-center justify-between mx-auto">
+        <div class="text-gray-800">
+          <h1 class="font-semibold leading-tight text-3xl text-up">{{ title }}</h1>
+          <slot name="header-content" />
+        </div>
+
+        <img class="h-16 w-16" src="/images/up-yeah-logo.jpg" alt="">
       </div>
     </header>
 
-    <article class="container mx-auto py-12">
+    <article class="container mx-auto py-20">
       <slot />
     </article>
   </main>
@@ -26,7 +28,7 @@ export default {
       immediate: true,
 
       handler(title) {
-        document.title = `${title} | up yeah dashboard`
+        document.title = `${title} | up yeah`
       },
     },
   },
