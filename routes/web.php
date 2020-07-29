@@ -18,11 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes([
-    'confirm',
     'login',
     'logout',
-    'reset',
-    'verify',
 ]);
 
 /*
@@ -32,7 +29,7 @@ Auth::routes([
 */
 
 Route::name('dashboard.')
-    ->middleware('auth')
+    ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'overview'])->name('overview');
     });

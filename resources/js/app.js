@@ -1,6 +1,8 @@
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
 
+import './bootstrap'
+
 Vue.use(InertiaApp)
 
 const app = document.getElementById('app')

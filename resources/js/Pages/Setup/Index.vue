@@ -7,7 +7,7 @@
     </template>
 
     <div class="max-w-md mx-auto w-full">
-      <form class="bg-white px-8 py-10 rounded shadow-md" @submit.prevent="submit">
+      <form class="bg-white px-8 py-10 rounded shadow-md" @submit.prevent="submitting = true, submit()">
         <div class="mb-6">
           <label class="block font-bold mb-2 text-gray-700 text-sm" for="email">
             Email Address
@@ -40,20 +40,18 @@
             v-model="form.password"
             autocomplete="new-password"
             id="password"
-            type="password"
-            required>
+            type="password">
         </div>
 
         <div class="mb-6">
-          <label class="block font-bold mb-2 text-gray-700 text-sm" for="confirm_password">
+          <label class="block font-bold mb-2 text-gray-700 text-sm" for="password_confirmation">
             Confirm Password
           </label>
           <input class="appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full focus:outline-none focus:shadow-outline"
-            v-model="form.confirm_password"
+            v-model="form.password_confirmation"
             autocomplete="new-password"
-            id="confirm_password"
-            type="password"
-            required>
+            id="password_confirmation"
+            type="password">
         </div>
 
         <!-- <div class="mb-6">
@@ -65,7 +63,7 @@
         </div> -->
 
         <div class="flex items-center justify-center pt-6">
-          <button class="bg-up font-bold text-white py-3 px-8 rounded focus:outline-none focus:shadow-outline hover:bg-opacity-75" type="submit">
+          <button class="font-bold py-3 px-8 rounded" type="submit" :class="submitButtonClasses" :disabled="submitting">
             Finish Setup
           </button>
         </div>
@@ -75,6 +73,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import Layout from '../Layout'
 
 export default {
@@ -87,24 +87,38 @@ export default {
   data() {
     return {
       form: {
-        confirm_password : null,
-        email            : null,
-        name             : null,
-        password         : null,
+        email                 : null,
+        name                  : null,
+        password              : null,
+        password_confirmation : null,
       },
+
+      submitting: false,
     }
   },
 
   props: {
     action: String,
-    errors: Object,
+  },
+
+  computed: {
+    submitButtonClasses: function() {
+      const submitting = this.submitting
+
+      return {
+        'bg-gray-200 cursor-not-allowed text-gray-600': submitting,
+        'bg-up text-white focus:outline-none focus:shadow-outline hover:bg-opacity-75': !submitting,
+      }
+    },
   },
 
   methods: {
     submit() {
-      console.log(this.form)
+      axios.post(this.action, this.form).then((response) => {
+        this.submitting = false
 
-      this.$inertia.post(this.action, this.form)
+        console.log(response)
+      })
     },
   },
 }
