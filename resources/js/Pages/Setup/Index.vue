@@ -7,51 +7,42 @@
     </template>
 
     <div class="max-w-md mx-auto w-full">
-      <form class="bg-white px-8 py-10 rounded shadow-md" @submit.prevent="submitting = true, submit()">
+      <FormulateForm class="bg-white px-8 py-10 rounded shadow-md" @submit="submitting = true, submit($event)">
         <div class="mb-6">
-          <label class="block font-bold mb-2 text-gray-700 text-sm" for="email">
-            Email Address
-          </label>
-          <input class="appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full focus:outline-none focus:shadow-outline"
-            v-model="form.email"
+          <FormulateInput
             autocomplete="email"
-            id="email"
+            label="Email Address"
+            name="email"
             type="email"
-            required>
+            validation="required|email" />
         </div>
 
         <div class="mb-6">
-          <label class="block font-bold mb-2 text-gray-700 text-sm" for="name">
-            Name
-          </label>
-          <input class="appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full focus:outline-none focus:shadow-outline"
-            v-model="form.name"
+          <FormulateInput
             autocomplete="name"
-            id="name"
+            label="Name"
+            name="name"
             type="text"
-            required>
+            validation="required" />
         </div>
 
         <div class="mb-6">
-          <label class="block font-bold mb-2 text-gray-700 text-sm" for="password">
-            Password
-          </label>
-          <input class="appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full focus:outline-none focus:shadow-outline"
-            v-model="form.password"
+          <FormulateInput
             autocomplete="new-password"
-            id="password"
-            type="password">
+            label="Password"
+            name="password"
+            type="password"
+            validation="required" />
         </div>
 
         <div class="mb-6">
-          <label class="block font-bold mb-2 text-gray-700 text-sm" for="password_confirmation">
-            Confirm Password
-          </label>
-          <input class="appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full focus:outline-none focus:shadow-outline"
-            v-model="form.password_confirmation"
+          <FormulateInput
             autocomplete="new-password"
-            id="password_confirmation"
-            type="password">
+            label="Confirm Password"
+            name="password_confirmation"
+            type="password"
+            validation="required|confirm:password"
+            validation-name="Password confirmation" />
         </div>
 
         <!-- <div class="mb-6">
@@ -67,7 +58,7 @@
             Finish Setup
           </button>
         </div>
-      </form>
+      </FormulateForm>
     </div>
   </layout>
 </template>
@@ -86,13 +77,6 @@ export default {
 
   data() {
     return {
-      form: {
-        email                 : null,
-        name                  : null,
-        password              : null,
-        password_confirmation : null,
-      },
-
       submitting: false,
     }
   },
@@ -113,12 +97,12 @@ export default {
   },
 
   methods: {
-    submit() {
-      axios.post(this.action, this.form).then((response) => {
-        this.submitting = false
-
-        console.log(response)
-      })
+    submit(formData) {
+      axios.post(this.action, formData).then(({ data, status }) => {
+        if (status === 200) {
+          console.log(data)
+        }
+      }).finally(() => this.submitting = false)
     },
   },
 }

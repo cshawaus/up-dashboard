@@ -26,6 +26,7 @@
         "webpack": "^4.44.0"
     },
     "dependencies": {
+        "@braid/vue-formulate": "^2.4.3",
         "@inertiajs/inertia": "^0.1.9",
         "@inertiajs/inertia-vue": "^0.1.4",
         "chart.js": "^2.9.3",

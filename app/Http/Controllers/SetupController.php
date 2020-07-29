@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+
 use App\Models\User;
 
 use Inertia\Inertia;
@@ -11,7 +13,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class SetupController extends Controller
@@ -23,23 +25,36 @@ class SetupController extends Controller
 
     public function finish(Request $request)
     {
-        $status = false;
+        $standardError = $status = false;
 
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email|unique:users',
             'name'     => 'required|string|min:1',
-            'password' => 'required|password|confirmed',
+            'password' => 'required|confirmed',
         ]);
 
         if (!$validator->fails()) {
-            $this->createInitialRolesAndPermissionsAndUser($validator->validated());
+            try {
+                $this->createInitialRolesAndPermissionsAndUser($validator->validated());
+
+                $status = true;
+            } catch (Exception $ex) {
+                $standardError = 'Unexpected error while setting things up!';
+
+                Log::error($standardError, [
+                    $ex->getFile(),
+                    $ex->getLine(),
+                    $ex->getMessage(),
+                ]);
+            }
         }
 
-        // ->withErrors()
-        // ->withInput($request->except(['password', 'password_confirmation']))
-        // ->withFormStatus($status);
         return response()->json([
-            'errors' => $validator->getMessageBag()->getMessages(),
+            'errors' => (object) [
+                'form'   => $standardError,
+                'inputs' => $validator->getMessageBag()->getMessages(),
+            ],
+
             'status' => $status,
         ]);
     }
@@ -72,7 +87,7 @@ class SetupController extends Controller
             $data['updated_at']        = Date::now();
 
             /** @var User */
-            $user = User::create();
+            $user = User::create($data);
 
             $user->assignRole($adminRole, $userRole);
             $user->givePermissionTo($superAdminPermission);
