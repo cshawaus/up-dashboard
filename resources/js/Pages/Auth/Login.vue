@@ -1,19 +1,29 @@
 <template>
-  <form @submit.prevent="submit">
-    <label for="email">Email:</label>
-    <input id="email" v-model="form.email" />
-    <p v-if="errors.email">{{ errors.email[0] }}</p>
+  <layout title="Login">
+    <form @submit.prevent="submit">
+      <label for="email">Email:</label>
+      <input id="email" v-model="form.email" />
+      <p v-if="errors.email">{{ errors.email[0] }}</p>
 
-    <label for="password">Password:</label>
-    <input id="password" v-model="form.password" />
-    <p v-if="errors.password">{{ errors.password[0] }}</p>
+      <label for="password">Password:</label>
+      <input id="password" v-model="form.password" />
+      <p v-if="errors.password">{{ errors.password[0] }}</p>
 
-    <button type="submit">Submit</button>
-  </form>
+      <button type="submit">Submit</button>
+    </form>
+  </layout>
 </template>
 
 <script>
+import Layout from '../Layout'
+
 export default {
+  name: 'AuthLogin',
+
+  components: {
+    Layout,
+  },
+
   data() {
     return {
       form: {

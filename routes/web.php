@@ -18,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes([
-    'login',
-    'logout',
+    'confirm'  => false,
+    'login'    => true,
+    'logout'   => true,
+    'register' => false,
+    'reset'    => false,
+    'verify'   => false,
 ]);
 
 /*

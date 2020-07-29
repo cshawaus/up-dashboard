@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SetupController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return Inertia::render('Setup/Index', ['action' => route('setup.index')]);
     }
