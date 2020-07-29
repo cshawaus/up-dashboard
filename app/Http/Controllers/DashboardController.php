@@ -17,7 +17,6 @@ class DashboardController extends Controller
                 ->json();
         });
 
-        return Inertia::render('Dashboard/Overview', ['accounts' => $accounts])
-            ->withViewData(['title' => 'Overview']);
+        return Inertia::render('Dashboard/Overview', ['accounts' => $accounts]);
     }
 }

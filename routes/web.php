@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SetupController;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'overview']);
+Auth::routes([
+    'confirm',
+    'login',
+    'logout',
+    'reset',
+    'verify',
+]);
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard
+|--------------------------------------------------------------------------
+*/
+
+Route::name('dashboard.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'overview'])->name('overview');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Account Setup
+|--------------------------------------------------------------------------
+*/
+
+// ...
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Setup
+|--------------------------------------------------------------------------
+*/
+
+Route::name('setup.')
+    ->prefix('setup')
+    ->group(function () {
+        Route::get('/', [SetupController::class, 'index'])->name('index');
+        Route::post('/', [SetupController::class, 'finish'])->name('finish');
+    });

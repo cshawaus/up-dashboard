@@ -7,7 +7,7 @@
 /public/mix-manifest.json
 /storage/*.key
 /vendor
-_ide_helper.php
+_ide_helper*.php
 .DS_Store
 .env
 .env.backup

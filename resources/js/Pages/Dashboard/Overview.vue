@@ -23,7 +23,7 @@ const currencyFormatter = new Intl.NumberFormat('en-AU', {
 })
 
 export default {
-  name: 'DashboardIndex',
+  name: 'DashboardOverview',
 
   components: {
     Layout,
