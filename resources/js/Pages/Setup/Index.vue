@@ -8,7 +8,14 @@
 
     <div class="max-w-md mx-auto w-full">
       <FormulateForm class="bg-white px-8 py-10 rounded shadow-md" @submit="submitted = true, submit($event)">
-        <p class="mb-6" v-if="errors.generic">{{ errors.generic }}</p>
+        <div
+          class="bg-red-100 border border-red-400 mb-6 px-4 py-3 rounded text-red-700 text-sm"
+          role="alert"
+          v-if="errors.generic"
+        >
+          <strong class="font-bold">Hmm!</strong>
+          <p class="block">{{ errors.generic[0] }}</p>
+        </div>
 
         <div class="mb-6">
           <FormulateInput
@@ -86,8 +93,8 @@ export default {
   },
 
   props: {
-    action : String,
-    errors : Object,
+    action: String,
+    errors: Object,
   },
 
   updated() {

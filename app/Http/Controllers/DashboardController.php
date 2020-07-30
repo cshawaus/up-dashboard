@@ -2,21 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\UpYeahApi;
+use App\Models\User;
+
 use Inertia\Inertia;
 
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
-    public function overview()
+    public function overview(UpYeahApi $upYeahApi)
     {
-        $accounts = Cache::remember('up.accounts', now()->addMinutes(10), function () {
-            return Http::withToken(env('UP_YEAH_TOKEN'))
-                ->get('https://api.up.com.au/api/v1/accounts')
-                ->json();
-        });
+        $id = Auth::id();
+
+        $accounts = Cache::remember(
+            "up.accounts.$id",
+            now()->addMinutes(10),
+            fn () => $this->getAccounts($upYeahApi),
+        );
 
         return Inertia::render('Dashboard/Overview', ['accounts' => $accounts]);
+    }
+
+    private function getAccounts(UpYeahApi $upYeahApi)
+    {
+        /** @var User */
+        $user = Auth::user();
+
+        try {
+            return $upYeahApi->setToken($user->getToken())->accounts();
+        } catch (RequestException $ex) {
+            return json_encode([]);
+        }
     }
 }

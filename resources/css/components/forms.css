@@ -2,3 +2,85 @@ button[type='button'] > .spinner,
 button[type='submit'] > .spinner {
   margin-left: 8px;
 }
+
+/**
+ * Vue Formulate
+ */
+
+.formulate-input-label {
+  @apply block font-bold mb-2 text-gray-700 text-sm;
+}
+
+.formulate-input-element--email input,
+.formulate-input-element--password input,
+.formulate-input-element--text input,
+.formulate-input-element--textarea textarea {
+  @apply appearance-none border leading-tight rounded px-3 py-3 shadow text-gray-700 w-full;
+
+  &:focus {
+    @apply outline-none shadow-outline;
+  }
+
+  &:disabled {
+    @apply bg-gray-200 cursor-not-allowed;
+  }
+}
+
+.formulate-input[data-type='checkbox'],
+.formulate-input[data-type='radio'] {
+  .formulate-input-wrapper {
+    @apply inline-flex items-center;
+  }
+
+  .formulate-input-label {
+    @apply mb-0;
+  }
+}
+
+.formulate-input-element--checkbox,
+.formulate-input-element--radio {
+  .formulate-input-element-decorator {
+    @apply block border border-gray-400 border-solid duration-200 ease-in-out h-4 mr-2 pt-px rounded-sm text-up transition-colors w-4;
+
+    &::before {
+      @apply block duration-200 ease-in-out font-bold leading-3 opacity-0 text-center text-sm transition-opacity w-full;
+
+      content: '✓';
+    }
+  }
+
+  input {
+    @apply sr-only;
+
+    &:checked ~ .formulate-input-element-decorator {
+      @apply border-up;
+
+      &::before {
+        @apply opacity-100;
+      }
+    }
+  }
+}
+
+.formulate-input-element--button,
+.formulate-input-element--submit {
+  button {
+    @apply bg-up font-bold inline-flex items-center py-3 px-8 rounded text-white;
+
+    &:focus {
+      @apply outline-none shadow-outline;
+    }
+
+    &:hover {
+      @apply bg-opacity-75;
+    }
+
+    &:disabled {
+      @apply bg-gray-200 cursor-not-allowed text-gray-600;
+    }
+  }
+}
+
+.formulate-input-errors {
+  @apply pt-2 text-red-600 text-sm;
+}

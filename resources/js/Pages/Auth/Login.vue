@@ -27,6 +27,14 @@
             validation="required" />
         </div>
 
+        <div class="mb-6">
+          <FormulateInput
+            checked
+            label="Remember Me?"
+            name="remember"
+            type="checkbox" />
+        </div>
+
         <div class="flex items-center justify-center pt-6">
           <FormulateInput
             :disabled="submitted"

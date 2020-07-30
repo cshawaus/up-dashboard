@@ -39,19 +39,14 @@ class SetupController extends Controller
 
                 return Redirect::route('login');
             } catch (Exception $ex) {
-                $standardError = 'Unexpected error while setting things up!';
+                $validator->getMessageBag()->add('generic', 'Unexpected error while setting things up.');
 
-                $validator->getMessageBag()->add('generic', $standardError);
-
-                Log::error($standardError, [
-                    $ex->getFile(),
-                    $ex->getLine(),
-                    $ex->getMessage(),
-                ]);
+                Log::error('One or more of the database transactions have failed!', [$ex->getMessage()]);
             }
         }
 
-        return Redirect::route('setup.index');
+        return Redirect::route('setup.index')
+            ->withErrors($validator->getMessageBag());
     }
 
     private function createInitialRolesAndPermissionsAndUser(array $data): void

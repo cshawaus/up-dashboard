@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\UpYeahTokenController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +34,7 @@ Auth::routes([
 */
 
 Route::name('dashboard.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['up.yeah.token', 'auth', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'overview'])->name('overview');
     });
@@ -44,7 +45,12 @@ Route::name('dashboard.')
 |--------------------------------------------------------------------------
 */
 
-// ...
+Route::name('user.')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('set-token', [UpYeahTokenController::class, 'index'])->name('set-token');
+        Route::post('set-token', [UpYeahTokenController::class, 'finish'])->name('set-token-finish');
+    });
 
 /*
 |--------------------------------------------------------------------------

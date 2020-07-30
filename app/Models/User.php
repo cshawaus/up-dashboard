@@ -39,4 +39,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Retrieve the up yeah API token.
+     */
+    public function getToken(): string
+    {
+        return decrypt($this->up_yeah_token);
+    }
 }

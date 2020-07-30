@@ -1,7 +1,7 @@
 .spinner {
   @apply animate-spin block border-2 border-solid rounded-full;
 
-  border-color: transparent #fff #fff transparent;
+  border-color: transparent var(--color-white) var(--color-white) transparent;
   height: 16px;
   width: 16px;
 }
