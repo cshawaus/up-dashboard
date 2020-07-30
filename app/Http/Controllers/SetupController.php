@@ -13,14 +13,19 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class SetupController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Setup/Index', ['action' => route('setup.index')]);
+        return Inertia::render('Setup/Index', [
+            'action'   => route('setup.index'),
+            'redirect' => route('login'),
+        ]);
     }
 
     public function finish(Request $request)
@@ -49,19 +54,23 @@ class SetupController extends Controller
             }
         }
 
-        return response()->json([
-            'errors' => (object) [
-                'form'   => $standardError,
-                'inputs' => $validator->getMessageBag()->getMessages(),
-            ],
+        return Redirect::route('setup.index');
 
-            'status' => $status,
-        ]);
+        // return response()->json([
+        //     'errors' => (object) [
+        //         'form'   => $standardError,
+        //         'inputs' => $validator->getMessageBag()->getMessages(),
+        //     ],
+
+        //     'status' => $status,
+        // ]);
     }
 
     private function createInitialRolesAndPermissionsAndUser(array $data): void
     {
         DB::transaction(function () use ($data) {
+            $timestamp = Date::now();
+
             /** @var Role */
             $adminRole = Role::create(['name' => 'administrator']);
             /** @var Role */
@@ -72,25 +81,21 @@ class SetupController extends Controller
 
             $adminRole->givePermissionTo($siteAdminPermission);
 
-            $assignUpTokenPermission = Permission::create(['name' => 'assign token']);
-            $editAccountsPermission  = Permission::create(['name' => 'edit accounts']);
-            $seeAccountsPermission   = Permission::create(['name' => 'see accounts']);
+            $assignUpTokenPermission  = Permission::create(['name' => 'assign token']);
+            $manageAccountsPermission = Permission::create(['name' => 'manage account']);
 
-            $userRole->givePermissionTo([
-                $assignUpTokenPermission,
-                $editAccountsPermission,
-                $seeAccountsPermission,
-            ]);
+            $userRole->givePermissionTo($manageAccountsPermission);
 
-            $data['email_verified_at'] = Date::now();
-            $data['created_at']        = Date::now();
-            $data['updated_at']        = Date::now();
+            $data['email_verified_at'] = $timestamp;
+            $data['password']          = Hash::make($data['password']);
+            $data['created_at']        = $timestamp;
+            $data['updated_at']        = $timestamp;
 
             /** @var User */
             $user = User::create($data);
 
             $user->assignRole($adminRole, $userRole);
-            $user->givePermissionTo($superAdminPermission);
+            $user->givePermissionTo($superAdminPermission, $assignUpTokenPermission);
         });
     }
 }

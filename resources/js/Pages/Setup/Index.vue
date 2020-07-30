@@ -1,13 +1,13 @@
 <template>
   <layout title="Setup Dashboard">
-    <template v-slot:header-content>
+    <template #header-content>
       <div class="max-w-3xl w-full">
         <p class="text-base">Before you can use the dashboard it is best to ensure it is secure. Create an administrator account below that will have access to manage the entire dashboard.</p>
       </div>
     </template>
 
     <div class="max-w-md mx-auto w-full">
-      <FormulateForm class="bg-white px-8 py-10 rounded shadow-md" @submit="submitting = true, submit($event)">
+      <FormulateForm class="bg-white px-8 py-10 rounded shadow-md" @submit="submitted = true, submit($event)">
         <div class="mb-6">
           <FormulateInput
             autocomplete="email"
@@ -54,9 +54,13 @@
         </div> -->
 
         <div class="flex items-center justify-center pt-6">
-          <button class="font-bold py-3 px-8 rounded" type="submit" :class="submitButtonClasses" :disabled="submitting">
-            Finish Setup
-          </button>
+          <FormulateInput
+            :disabled="submitted"
+            :options="{ 'disabled': submitted }"
+            type="submit"
+          >
+            Finish Setup <span class="spinner" v-if="submitted" />
+          </FormulateInput>
         </div>
       </FormulateForm>
     </div>
@@ -64,8 +68,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import Layout from '../Layout'
 
 export default {
@@ -77,32 +79,31 @@ export default {
 
   data() {
     return {
-      submitting: false,
+      submitted: false,
     }
   },
 
   props: {
-    action: String,
+    action   : String,
+    errors   : Object,
+    redirect : String,
   },
 
-  computed: {
-    submitButtonClasses: function() {
-      const submitting = this.submitting
+  updated() {
+    this.submitted = false
 
-      return {
-        'bg-gray-200 cursor-not-allowed text-gray-600': submitting,
-        'bg-up text-white focus:outline-none focus:shadow-outline hover:bg-opacity-75': !submitting,
-      }
-    },
+    // if ()
   },
 
   methods: {
     submit(formData) {
-      axios.post(this.action, formData).then(({ data, status }) => {
-        if (status === 200) {
-          console.log(data)
-        }
-      }).finally(() => this.submitting = false)
+      this.$inertia.post(this.action, formData)
+
+      // axios.post(this.action, formData).then(({ data, status }) => {
+      //   if (status === 200) {
+      //     this.$inertia.visit(this.redirect)
+      //   }
+      // }).finally(() => this.submitting = false)
     },
   },
 }

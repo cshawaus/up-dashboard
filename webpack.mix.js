@@ -18,6 +18,24 @@ mix.js('resources/js/app.js', 'public/js')
 
 /*
  |--------------------------------------------------------------------------
+ | Webpack Options
+ |--------------------------------------------------------------------------
+ */
+
+mix.webpackConfig({
+  output: {
+    chunkFilename: mix.inProduction() ? 'js/[name].[chunkhash].js' : 'js/[name].js',
+  },
+
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.runtime.esm.js',
+    },
+  },
+})
+
+/*
+ |--------------------------------------------------------------------------
  | Hot Module Replacement
  |--------------------------------------------------------------------------
  */

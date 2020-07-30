@@ -1,16 +1,43 @@
 <template>
   <layout title="Login">
-    <form @submit.prevent="submit">
-      <label for="email">Email:</label>
-      <input id="email" v-model="form.email" />
-      <p v-if="errors.email">{{ errors.email[0] }}</p>
+    <div class="max-w-md mx-auto w-full">
+      <FormulateForm
+        class="bg-white px-8 py-10 rounded shadow-md"
+        @submit="submitted = true, submit($event)"
+      >
+        <div class="mb-6">
+          <FormulateInput
+            :disabled="submitted"
+            :error="errors.email ? errors.email[0] : null"
+            autocomplete="email"
+            label="Email Address"
+            name="email"
+            type="email"
+            validation="required|email" />
+        </div>
 
-      <label for="password">Password:</label>
-      <input id="password" v-model="form.password" />
-      <p v-if="errors.password">{{ errors.password[0] }}</p>
+        <div class="mb-6">
+          <FormulateInput
+            :disabled="submitted"
+            :error="errors.password ? errors.password[0] : null"
+            autocomplete="new-password"
+            label="Password"
+            name="password"
+            type="password"
+            validation="required" />
+        </div>
 
-      <button type="submit">Submit</button>
-    </form>
+        <div class="flex items-center justify-center pt-6">
+          <FormulateInput
+            :disabled="submitted"
+            :options="{ 'disabled': submitted }"
+            type="submit"
+          >
+            Login <span class="spinner" v-if="submitted" />
+          </FormulateInput>
+        </div>
+      </FormulateForm>
+    </div>
   </layout>
 </template>
 
@@ -26,10 +53,7 @@ export default {
 
   data() {
     return {
-      form: {
-        email    : null,
-        password : null,
-      },
+      submitted: false,
     }
   },
 
@@ -38,9 +62,13 @@ export default {
     errors: Object,
   },
 
+  updated() {
+    this.submitted = false
+  },
+
   methods: {
-    submit() {
-      this.$inertia.post(this.action, this.form)
+    submit(formData) {
+      this.$inertia.post(this.action, formData)
     },
   },
 }
