@@ -50,4 +50,4 @@ You will also need to setup an API token
 ## The legal bit
 This dashboard is not endorsed nor offered by Up, it is a personal project and is not rated for security therefore you will be using this software at your own risk. Terms such as **up** and **up yeah** are trademarks of Up.
 
-© 2020 Chris Shaw.
+Copyright (c) 2020 Chris Shaw.
