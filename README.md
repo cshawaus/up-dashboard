@@ -4,6 +4,8 @@
 ![php][php]
 ![laravel][laravel]
 ![production ready][production-ready]
+[![last commit][last-commit]][last-commit-url]
+[![contributors][contributors]][contributors-url]
 
 # up yeah dashboard
 A simple project that provides a way to self-manage your own _up_ dashboard.
@@ -61,3 +63,9 @@ Copyright (c) 2020 Chris Shaw.
 [php]: https://img.shields.io/badge/php-%5E7.4-blue
 [laravel]: https://img.shields.io/badge/laravel-7-ff2d20
 [production-ready]: https://img.shields.io/badge/prod%20ready-NO-critical
+
+[last-commit]: https://img.shields.io/github/last-commit/cshawaus/up-dashboard
+[last-commit-url]: https://github.com/cshawaus/up-dashboard/commits
+
+[contributors]: https://img.shields.io/github/contributors/cshawaus/up-dashboard.svg
+[contributors-url]: https://github.com/cshawaus/up-dashboard/graphs/contributors
