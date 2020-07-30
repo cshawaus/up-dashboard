@@ -1,41 +1,9 @@
-@tailwind base;
+@import 'tailwindcss/base';
+@import './base-styles.css';
 
-html,
-body,
-main {
-  height: 100%;
-  min-height: 100%;
-}
+@import 'tailwindcss/components';
+@import './components/nprogress.css';
+@import './components/forms.css';
+@import './components/spinner.css';
 
-@tailwind components;
-
-/**
- * Forms
- */
-
-button[type='button'] > .spinner,
-button[type='submit'] > .spinner {
-  margin-left: 8px;
-}
-
-/**
- * Spinner
- */
-
-.spinner {
-  @apply block border-2 border-solid rounded-full;
-
-  animation: spinner 500ms linear infinite;
-  backface-visibility: none;
-  border-color: transparent #fff #fff transparent;
-  height: 16px;
-  transform: rotate(0deg);
-  width: 16px;
-}
-
-@keyframes spinner {
-  0% { transform: rotate(0deg); }
-  to { transform: rotate(1turn); }
-}
-
-@tailwind utilities;
+@import 'tailwindcss/utilities';

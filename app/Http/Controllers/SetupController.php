@@ -22,16 +22,11 @@ class SetupController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Setup/Index', [
-            'action'   => route('setup.index'),
-            'redirect' => route('login'),
-        ]);
+        return Inertia::render('Setup/Index', ['action' => route('setup.index')]);
     }
 
     public function finish(Request $request)
     {
-        $standardError = $status = false;
-
         $validator = Validator::make($request->all(), [
             'email'    => 'required|email|unique:users',
             'name'     => 'required|string|min:1',
@@ -42,9 +37,11 @@ class SetupController extends Controller
             try {
                 $this->createInitialRolesAndPermissionsAndUser($validator->validated());
 
-                $status = true;
+                return Redirect::route('login');
             } catch (Exception $ex) {
                 $standardError = 'Unexpected error while setting things up!';
+
+                $validator->getMessageBag()->add('generic', $standardError);
 
                 Log::error($standardError, [
                     $ex->getFile(),
@@ -55,15 +52,6 @@ class SetupController extends Controller
         }
 
         return Redirect::route('setup.index');
-
-        // return response()->json([
-        //     'errors' => (object) [
-        //         'form'   => $standardError,
-        //         'inputs' => $validator->getMessageBag()->getMessages(),
-        //     ],
-
-        //     'status' => $status,
-        // ]);
     }
 
     private function createInitialRolesAndPermissionsAndUser(array $data): void

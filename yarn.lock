@@ -1307,7 +1307,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autoprefixer@^9.4.2, autoprefixer@^9.4.5:
+autoprefixer@^9.4.2, autoprefixer@^9.4.5, autoprefixer@^9.8.5:
   version "9.8.5"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.8.5.tgz#2c225de229ddafe1d1424c02791d0c3e10ccccaa"
   integrity sha512-C2p5KkumJlsTHoNv9w31NrBRgXhf6eCMteJuHZi2xhkgC+5Vm40MEtCKPhc0qdgAOhox0YPy1SQHTAky05UoKg==
@@ -1320,14 +1320,7 @@ autoprefixer@^9.4.2, autoprefixer@^9.4.5:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
-axios@0.20.0-0:
-  version "0.20.0-0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0-0.tgz#cbb49efab92d14be740a04c0f1d0c68031773f36"
-  integrity sha512-FdJxKL7EntcZprZvis5kDQ13aXVG1Fn022tG45wvP7/ILZ074pedaFLkI4uQgfRCrxwkzXeLnL3GOvXo6gqitg==
-  dependencies:
-    follow-redirects "^1.10.0"
-
-axios@^0.19.0:
+axios@0.19.2, axios@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -3140,7 +3133,7 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.0.0, follow-redirects@^1.10.0:
+follow-redirects@^1.0.0:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.12.1.tgz#de54a6205311b93d60398ebc01cf7015682312b6"
   integrity sha512-tmRv0AVuR7ZyouUHLeNSiO6pqulF7dYa3s19c6t+wz9LD69/uSzdMxJ2S91nTI9U3rt/IldxpzMOFejp6f0hjg==
@@ -4071,7 +4064,7 @@ jest-worker@^25.4.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
-jquery@^3.2:
+jquery@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
@@ -5157,7 +5150,7 @@ picomatch@^2.0.4, picomatch@^2.2.1:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
 
-pify@^2.0.0:
+pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
@@ -5198,7 +5191,7 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
-popper.js@^1.12:
+popper.js@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
   integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -5282,6 +5275,16 @@ postcss-functions@^3.0.0:
     object-assign "^4.1.1"
     postcss "^6.0.9"
     postcss-value-parser "^3.3.0"
+
+postcss-import@^12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/postcss-import/-/postcss-import-12.0.1.tgz#cf8c7ab0b5ccab5649024536e565f841928b7153"
+  integrity sha512-3Gti33dmCjyKBgimqGxL3vcV8w9+bsHwO5UrBawp796+jdardbcFl4RP5w/76BwNL7aGzpKstIfF9I+kdE8pTw==
+  dependencies:
+    postcss "^7.0.1"
+    postcss-value-parser "^3.2.3"
+    read-cache "^1.0.0"
+    resolve "^1.1.7"
 
 postcss-js@^2.0.0:
   version "2.0.3"
@@ -5557,7 +5560,7 @@ postcss-unique-selectors@^4.0.1:
     postcss "^7.0.0"
     uniqs "^2.0.0"
 
-postcss-value-parser@^3.0.0, postcss-value-parser@^3.3.0:
+postcss-value-parser@^3.0.0, postcss-value-parser@^3.2.3, postcss-value-parser@^3.3.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.1.tgz#9ff822547e2893213cf1c30efa51ac5fd1ba8281"
   integrity sha512-pISE66AbVkp4fDQ7VHBwRNXzAAKJjw4Vw7nWI/+Q3vuly7SNfgYXvm6i5IgFylHGK5sP/xHAbB7N49OS4gWNyQ==
@@ -5758,6 +5761,13 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+read-cache@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/read-cache/-/read-cache-1.0.0.tgz#e664ef31161166c9751cdbe8dbcf86b5fb58f774"
+  integrity sha1-5mTvMRYRZsl1HNvo28+GtftY93Q=
+  dependencies:
+    pify "^2.3.0"
 
 "readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.6:
   version "2.3.7"
@@ -5970,7 +5980,7 @@ resolve-url@^0.2.1:
   resolved "https://registry.yarnpkg.com/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
-resolve@^1.14.2, resolve@^1.3.2, resolve@^1.8.1:
+resolve@^1.1.7, resolve@^1.14.2, resolve@^1.3.2, resolve@^1.8.1:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.17.0.tgz#b25941b54968231cc2d1bb76a79cb7f2c0bf8444"
   integrity sha512-ic+7JYiV8Vi2yzQGFWOkiZD5Z9z7O2Zhm9XMaTxdJExKasieFCr+yXZ/WmXsckHiKl12ar0y6XiXDx3m4RHn1w==
@@ -6607,10 +6617,15 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-tailwindcss@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.5.2.tgz#3e99526e55c600b9df9152b0db12449ed9770855"
-  integrity sha512-OR7wxFetvHruLkQABeQac7jFdTOs+MwXzsuccOuMItva9GBANPd2VX8NgJ3pdvuGSL23c5cVId9jsvuKgulBiQ==
+tailwind-css-variables@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tailwind-css-variables/-/tailwind-css-variables-2.0.3.tgz#3648e5fbadd40bb3393843828336b62c6915d529"
+  integrity sha512-GYf4fQgtahUao7JN87hrEaeJgRnuksbP/5GOtMxnWylDsCIZ02CQJ13/8MFTCH21LhLxRBD8BCDxkwEmXbqwlg==
+
+tailwindcss@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.6.0.tgz#cdad8cdd225129ad41bff6aa607aa39ad6524593"
+  integrity sha512-UZEex5ebsQlCTIBjI0oZITL67HBjOrzMgA4ceLOf8mrBGquLSn7LsO92do1nBSBZBV2Qqpivz9QUwT3zMSQkMA==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"

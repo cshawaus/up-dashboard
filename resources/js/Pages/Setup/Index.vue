@@ -8,6 +8,8 @@
 
     <div class="max-w-md mx-auto w-full">
       <FormulateForm class="bg-white px-8 py-10 rounded shadow-md" @submit="submitted = true, submit($event)">
+        <p class="mb-6" v-if="errors.generic">{{ errors.generic }}</p>
+
         <div class="mb-6">
           <FormulateInput
             autocomplete="email"
@@ -84,26 +86,17 @@ export default {
   },
 
   props: {
-    action   : String,
-    errors   : Object,
-    redirect : String,
+    action : String,
+    errors : Object,
   },
 
   updated() {
-    this.submitted = false
-
-    // if ()
+    this.$nextTick(() => this.submitted = false)
   },
 
   methods: {
     submit(formData) {
       this.$inertia.post(this.action, formData)
-
-      // axios.post(this.action, formData).then(({ data, status }) => {
-      //   if (status === 200) {
-      //     this.$inertia.visit(this.redirect)
-      //   }
-      // }).finally(() => this.submitting = false)
     },
   },
 }

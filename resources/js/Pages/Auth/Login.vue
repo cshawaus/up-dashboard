@@ -63,7 +63,7 @@ export default {
   },
 
   updated() {
-    this.submitted = false
+    this.$nextTick(() => this.submitted = false)
   },
 
   methods: {

@@ -1,0 +1,4 @@
+button[type='button'] > .spinner,
+button[type='submit'] > .spinner {
+  margin-left: 8px;
+}

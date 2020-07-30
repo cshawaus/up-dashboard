@@ -2,6 +2,7 @@ module.exports = {
   purge: [
     './resources/js/**/*.js',
     './resources/js/**/*.vue',
+    './resources/views/**/*.blade.php',
   ],
 
   theme: {
@@ -12,7 +13,7 @@ module.exports = {
     },
   },
 
-  variants: {},
-
-  plugins: [],
+  plugins: [
+    require('tailwind-css-variables')(),
+  ],
 }
