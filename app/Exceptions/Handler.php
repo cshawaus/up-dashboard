@@ -31,19 +31,6 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * @param  \Throwable  $exception
-     * @return void
-     *
-     * @throws \Exception
-     */
-    public function report(Throwable $exception)
-    {
-        parent::report($exception);
-    }
-
-    /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request

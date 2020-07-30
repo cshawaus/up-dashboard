@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <title>{{ $page['props']['app.name'] }}</title>
   <meta charset="utf-8">

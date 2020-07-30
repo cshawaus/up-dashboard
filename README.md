@@ -6,6 +6,9 @@
 ![production ready][production-ready]
 [![last commit][last-commit]][last-commit-url]
 [![contributors][contributors]][contributors-url]
+[![sonarqube-quality][sonarqube-quality]][sonarqube-quality-url]
+[![sonarqube-vulnerabilities][sonarqube-vulnerabilities]][sonarqube-vulnerabilities-url]
+[![sonarqube-security][sonarqube-security]][sonarqube-security-url]
 
 # up yeah dashboard
 A simple project that provides a way to self-manage your own _up_ dashboard.
@@ -59,10 +62,19 @@ This dashboard is not endorsed nor offered by Up, it is a personal project and i
 
 Copyright (c) 2020 Chris Shaw.
 
-[license]: https://img.shields.io/badge/license-MIT-green
+[license]: https://img.shields.io/github/license/cshawaus/up-dashboard
 [php]: https://img.shields.io/badge/php-%5E7.4-blue
 [laravel]: https://img.shields.io/badge/laravel-7-ff2d20
 [production-ready]: https://img.shields.io/badge/prod%20ready-NO-critical
+
+[sonarqube-quality]: https://sonarcloud.io/api/project_badges/measure?project=cshawaus_up-dashboard&metric=alert_status
+[sonarqube-quality-url]: https://sonarcloud.io/dashboard?id=cshawaus_up-dashboard
+
+[sonarqube-vulnerabilities]: https://sonarcloud.io/api/project_badges/measure?project=cshawaus_up-dashboard&metric=vulnerabilities
+[sonarqube-vulnerabilities-url]: https://sonarcloud.io/dashboard?id=cshawaus_up-dashboard
+
+[sonarqube-security]: https://sonarcloud.io/api/project_badges/measure?project=cshawaus_up-dashboard&metric=security_rating
+[sonarqube-security-url]: https://sonarcloud.io/dashboard?id=cshawaus_up-dashboard
 
 [last-commit]: https://img.shields.io/github/last-commit/cshawaus/up-dashboard
 [last-commit-url]: https://github.com/cshawaus/up-dashboard/commits
