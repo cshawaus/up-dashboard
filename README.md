@@ -1,5 +1,10 @@
 <p align="left"><img src="https://raw.githubusercontent.com/cshawaus/up-dashboard/master/public/images/up-yeah-logo.jpg?token=AAHWB5VMLLODM5BSMCYBWJK7FFNFI" width="100"></p>
 
+![license][license]
+![php][php]
+![laravel][laravel]
+![production ready][production-ready]
+
 # up yeah dashboard
 A simple project that provides a way to self-manage your own _up_ dashboard.
 
@@ -51,3 +56,8 @@ You will also need to setup an API token
 This dashboard is not endorsed nor offered by Up, it is a personal project and is not rated for security therefore you will be using this software at your own risk. Terms such as **up** and **up yeah** are trademarks of Up.
 
 Copyright (c) 2020 Chris Shaw.
+
+[license]: https://img.shields.io/badge/license-MIT-green
+[php]: https://img.shields.io/badge/php-%5E7.4-blue
+[laravel]: https://img.shields.io/badge/laravel-7-ff2d20
+[production-ready]: https://img.shields.io/badge/prod%20ready-NO-critical
