@@ -42,6 +42,13 @@ Ensure you generate a key using the below command and fill in all the relevant c
 $ php artisan key:generate
 ```
 
+### Migrations
+To install the database tables run:
+
+```bash
+$ php artisan migrate
+```
+
 ## Post-installation
 Upon completing the configuration and navigating to the application in your browser, you will be asked to create an initial user account. I have opted to use authentication on the off chance someone happens to use this in a production environment even though it is not production ready.
 
