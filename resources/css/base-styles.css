@@ -1,6 +1,6 @@
-html,
-body,
 main {
-  height: 100%;
-  min-height: 100%;
+  @apply bg-up h-screen gap-20 grid;
+
+  grid-template-areas: 'header' 'body' 'footer';
+  grid-template-rows: auto 1fr auto;
 }

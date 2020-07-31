@@ -8,7 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'up': '#ff7a64',
+        'offset-grey' : '#242430',
+        'up'          : '#ff7a64',
       },
     },
   },

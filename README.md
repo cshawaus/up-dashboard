@@ -65,7 +65,7 @@ You will also need to setup an API token
 - [ ] User account management
 
 ## The legal bit
-This dashboard is not endorsed nor offered by Up, it is a personal project and is not rated for security therefore you will be using this software at your own risk. Terms such as **up** and **up yeah** are trademarks of Up.
+This dashboard is not endorsed nor offered by Up. It is a personal project and is _not_ security tested, therefore, you will be using this software at your own risk. Terms such as **up** and **up yeah** are trademarks of Up.
 
 Copyright (c) 2020 Chris Shaw.
 
