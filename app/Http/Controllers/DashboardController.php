@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         $accounts = Cache::remember(
             "up.accounts.$id",
-            now()->addMinutes(10),
+            now()->addWeek(),
             fn () => $this->getAccounts($upYeahApi),
         );
 
