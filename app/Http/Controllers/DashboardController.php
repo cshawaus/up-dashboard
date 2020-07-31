@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\UpYeahApi;
+use App\Facades\UpYeahApi;
 use App\Models\User;
 
 use Inertia\Inertia;
@@ -13,26 +13,26 @@ use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
 {
-    public function overview(UpYeahApi $upYeahApi)
+    public function overview()
     {
         $id = Auth::id();
 
         $accounts = Cache::remember(
             "up.accounts.$id",
             now()->addWeek(),
-            fn () => $this->getAccounts($upYeahApi),
+            fn () => $this->getAccounts(),
         );
 
         return Inertia::render('Dashboard/Overview', ['accounts' => $accounts]);
     }
 
-    private function getAccounts(UpYeahApi $upYeahApi)
+    private function getAccounts()
     {
         /** @var User */
         $user = Auth::user();
 
         try {
-            return $upYeahApi->setToken($user->getToken())->accounts();
+            return UpYeahApi::setToken($user->getToken())->accounts();
         } catch (RequestException $ex) {
             return json_encode([]);
         }

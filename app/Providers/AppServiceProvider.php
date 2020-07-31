@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\Services\UpYeahApi;
+use App\Services\UpYeahApi;
 
 use Inertia\Inertia;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(UpYeahApi::class, fn () => new UpYeahApi);
+        $this->app->bind('up.yeah.api', fn () => new UpYeahApi);
     }
 
     /**

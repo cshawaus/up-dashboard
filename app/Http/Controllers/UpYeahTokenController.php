@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 
-use App\Http\Services\UpYeahApi;
+use App\Facades\UpYeahApi;
 use App\Models\User;
 
 use Inertia\Inertia;
@@ -26,7 +26,7 @@ class UpYeahTokenController extends Controller
         return Inertia::render('User/SetupToken', ['action' => route('user.set-token-finish')]);
     }
 
-    public function finish(Request $request, UpYeahApi $upYeahApi)
+    public function finish(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'token' => 'required|starts_with:up:yeah:',
@@ -36,7 +36,7 @@ class UpYeahTokenController extends Controller
             try {
                 $token = $validator->validated()['token'];
 
-                if ($this->testTokenWithPing($upYeahApi, $token)) {
+                if ($this->testTokenWithPing($token)) {
                     $this->updateTokenForUser($token);
                 }
 
@@ -52,10 +52,10 @@ class UpYeahTokenController extends Controller
             ->withErrors($validator->getMessageBag());
     }
 
-    private function testTokenWithPing(UpYeahApi $upYeahApi, string $token): bool
+    private function testTokenWithPing(string $token): bool
     {
         try {
-            $response = $upYeahApi->setToken($token)->ping();
+            $response = UpYeahApi::setToken($token)->ping();
 
             if (Arr::exists($response, 'errors')) {
                 throw new ErrorException('Invalid token supplied!');

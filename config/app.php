@@ -226,6 +226,8 @@ return [
         'Validator'         => Illuminate\Support\Facades\Validator::class,
         'View'              => Illuminate\Support\Facades\View::class,
 
+        'UpYeahApi'         => App\Facades\UpYeahApi::class,
+
     ],
 
 ];

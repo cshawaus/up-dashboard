@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
 use Whoops\Exception\ErrorException;
 
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\PendingRequest as Http;
 
-class UpYeahApi
+class UpYeahApi extends Http
 {
-    private static string $API_URL = 'https://api.up.com.au/api/v1/';
+    /**
+     * The base URL for the request.
+     *
+     * @var string
+     */
+    protected $baseUrl = 'https://api.up.com.au/api/v1/';
 
     /**
      * Tracks the number of requests left for the token.
@@ -18,15 +23,25 @@ class UpYeahApi
     /**
      * Token needed to make API requests to up.
      */
-    private string $token;
+    private ?string $token = null;
 
+    /**
+     * Send a request to the Up Yeah API.
+     *
+     * @param  string  $uri
+     * @return mixed
+     */
     private function makeRequest(string $uri)
     {
+        if ($this->token === null) {
+            throw new ErrorException('The token provided cannot be used as it is invalid, please set a valid token.');
+        }
+
         if ($this->requestLimit === 0) {
             throw new ErrorException('Unable to make request as the rate limit has been reached.');
         }
 
-        $request = Http::withToken($this->token)->get(static::$API_URL . $uri);
+        $request = $this->withToken($this->token)->get($uri);
 
         $this->requestLimit = intval($request->headers()['X-RateLimit-Remaining']);
 
@@ -48,7 +63,7 @@ class UpYeahApi
     }
 
     /**
-     * Ping the API to check the token is working correctly.
+     * Check the health of the token to ensure that it is valid.
      */
     public function ping()
     {
@@ -56,7 +71,7 @@ class UpYeahApi
     }
 
     /**
-     * Retrieve all the accounts.
+     * Find and retrieve all of the accounts associated with the token.
      */
     public function accounts()
     {
