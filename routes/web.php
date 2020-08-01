@@ -39,7 +39,7 @@ Route::name('dashboard.')
     ->group(function () {
         Route::get('/', [OverviewController::class, 'index'])->name('overview');
 
-        Route::get('/account/{uuid}', [AccountController::class, 'index'])->name('account');
+        Route::get('/account/{account}', [AccountController::class, 'index'])->name('account');
     });
 
 /*

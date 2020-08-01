@@ -35,11 +35,11 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::pattern(
-            'uuid',
+            'account',
             '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$'
         );
 
-        Route::bind('account', fn ($value) => Account::where('identifier', $value)->firstOrFail());
+        Route::bind('account', fn (string $uuid) => Account::where('identifier', $uuid)->firstOrFail());
     }
 
     /**
