@@ -52,6 +52,7 @@
 
 <script>
 import { format } from 'date-fns'
+
 import Layout from '../Layout'
 
 export default {

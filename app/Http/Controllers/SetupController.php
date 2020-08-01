@@ -52,8 +52,6 @@ class SetupController extends Controller
     private function createInitialRolesAndPermissionsAndUser(array $data): void
     {
         DB::transaction(function () use ($data) {
-            $timestamp = Date::now();
-
             /** @var Role */
             $adminRole = Role::create(['name' => 'administrator']);
             /** @var Role */
@@ -69,10 +67,8 @@ class SetupController extends Controller
 
             $userRole->givePermissionTo($manageAccountsPermission);
 
-            $data['email_verified_at'] = $timestamp;
+            $data['email_verified_at'] = Date::now();
             $data['password']          = Hash::make($data['password']);
-            $data['created_at']        = $timestamp;
-            $data['updated_at']        = $timestamp;
 
             /** @var User */
             $user = User::create($data);

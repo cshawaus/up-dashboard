@@ -11,25 +11,30 @@
     <div class="grid grid-cols-4 gap-8">
       <div
         class="bg-white cursor-pointer duration-200 ease-in-out px-10 py-8 relative rounded-lg shadow-md transform transition hover:scale-110 hover:shadow-xl"
-        v-for="account in accounts.data"
-        :key="account.id"
-        @click="navigateToAccount(account.id)"
+        v-for="account in accounts"
+        :key="account.identifier"
+        @click="navigateToAccount(account.identifier)"
       >
         <span
           class="absolute right-0 text-2xl top-0 transform -translate-x-5 translate-y-3"
-          v-if="account.attributes.accountType === 'SAVER'"
+          v-if="account.type === 'SAVER'"
         >
           ⚡
         </span>
 
-        <h2 class="font-bold text-lg">{{ account.attributes.displayName }}</h2>
-        <p>{{ account.attributes.balance.value | formatBalance }}</p>
+        <h2 class="font-bold text-lg">{{ account.name }}</h2>
+        <p>{{ account.balance | formatBalance }}</p>
+        <p class="text-xs">
+          <strong>Updated:</strong> {{ account.updated_at | lastUpdatedDate }}
+        </p>
       </div>
     </div>
   </layout>
 </template>
 
 <script>
+import { format } from 'date-fns'
+
 import Layout from '../Layout'
 
 export default {
@@ -40,13 +45,17 @@ export default {
   },
 
   props: {
-    accounts: Object,
+    accounts: Array,
   },
 
   methods: {
     navigateToAccount(id) {
       this.$inertia.visit(`/account/${id}`)
     },
+  },
+
+  filters: {
+    lastUpdatedDate: (value) => format(new Date(value), 'MMMM dd, yyyy'),
   },
 }
 </script>

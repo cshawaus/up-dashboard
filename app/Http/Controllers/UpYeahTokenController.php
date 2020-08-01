@@ -13,8 +13,8 @@ use Whoops\Exception\ErrorException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -37,7 +37,11 @@ class UpYeahTokenController extends Controller
                 $token = $validator->validated()['token'];
 
                 if ($this->testTokenWithPing($token)) {
-                    $this->updateTokenForUser($token);
+                    $user = Auth::user();
+
+                    $this->retrieveAccountsForToken($user, $token);
+
+                    $this->updateTokenForUser($user, $token);
                 }
 
                 return Redirect::route('login');
@@ -67,14 +71,31 @@ class UpYeahTokenController extends Controller
         return true;
     }
 
-    private function updateTokenForUser(string $token)
+    private function retrieveAccountsForToken(User $user, string $token)
     {
-        DB::transaction(function () use ($token) {
-            /** @var User */
-            $user = Auth::user();
-            $user->up_yeah_token = encrypt($token);
+        $accounts = UpYeahApi::setToken($token)->accounts();
 
-            $user->save();
-        });
+        if (Arr::exists($accounts, 'data')) {
+            $accountsToCreate = [];
+
+            foreach ($accounts['data'] as $account) {
+                array_push($accountsToCreate, [
+                    'name'          => $account['attributes']['displayName'],
+                    'identifier'    => $account['id'],
+                    'created'       => Carbon::parse($account['attributes']['createdAt']),
+                    'type'          => $account['attributes']['accountType'],
+                    'balance'       => floatval($account['attributes']['balance']['value']),
+                    'currency_code' => $account['attributes']['balance']['currencyCode'],
+                ]);
+            }
+
+            $user->accounts()->createMany($accountsToCreate);
+        }
+    }
+
+    private function updateTokenForUser(User $user, string $token)
+    {
+        $user->up_yeah_token = encrypt($token);
+        $user->save();
     }
 }

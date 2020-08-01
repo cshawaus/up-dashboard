@@ -29,7 +29,7 @@ class UpYeahApi extends Http
      * Send a request to the Up Yeah API.
      *
      * @param  string  $url
-     * @param  array   $params
+     * @param  array  $params
      * @return mixed
      */
     private function makeRequest(string $url, array $params = [])
@@ -118,10 +118,10 @@ class UpYeahApi extends Http
      *
      * @see https://developer.up.com.au/#get_accounts_accountId_transactions
      */
-    public function transactionsByAccount(string $uuid)
+    public function transactionsByAccount(string $uuid, int $pageSize = 100)
     {
         return $this->makeRequest(sprintf('/accounts/%s/transactions', $uuid), [
-            'page[size]' => 100,
+            'page[size]' => $pageSize,
         ]);
     }
 }

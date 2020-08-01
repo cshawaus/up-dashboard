@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Account;
+
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +32,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::pattern('uuid', '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$');
-
         parent::boot();
+
+        Route::pattern(
+            'uuid',
+            '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$'
+        );
+
+        Route::bind('account', fn ($value) => Account::where('identifier', $value)->firstOrFail());
     }
 
     /**

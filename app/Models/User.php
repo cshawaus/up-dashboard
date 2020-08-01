@@ -5,6 +5,7 @@ namespace App\Models;
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,5 +47,13 @@ class User extends Authenticatable
     public function getToken(): string
     {
         return decrypt($this->up_yeah_token);
+    }
+
+    /**
+     * Get all of the up accounts associated to the user.
+     */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(Account::class);
     }
 }
