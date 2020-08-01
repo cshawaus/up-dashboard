@@ -1,4 +1,5 @@
-const mix = require('laravel-mix');
+const mix     = require('laravel-mix')
+const webpack = require('webpack')
 
 /*
  |--------------------------------------------------------------------------
@@ -29,6 +30,13 @@ mix.webpackConfig({
   output: {
     chunkFilename: mix.inProduction() ? 'js/[name].[chunkhash].js' : 'js/[name].js',
   },
+
+  plugins: [
+    new webpack.ContextReplacementPlugin(
+      /date\-fns[\/\\]/,
+      new RegExp(`[/\\\\\](en-AU)[/\\\\\]`)
+    ),
+  ],
 
   resolve: {
     alias: {

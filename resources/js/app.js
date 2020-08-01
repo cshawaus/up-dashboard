@@ -5,6 +5,13 @@ import Vue from 'vue'
 Vue.use(InertiaApp)
 Vue.use(VueFormulate)
 
+const currencyFormatter = new Intl.NumberFormat('en-AU', {
+  currency : 'AUD',
+  style    : 'currency',
+})
+
+Vue.filter('formatBalance', (value) => currencyFormatter.format(parseFloat(value)))
+
 const app = document.getElementById('app')
 
 new Vue({

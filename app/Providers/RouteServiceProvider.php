@@ -24,6 +24,18 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     /**
+     * Define your route model bindings, pattern filters, etc.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Route::pattern('uuid', '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$');
+
+        parent::boot();
+    }
+
+    /**
      * Define the routes for the application.
      *
      * @return void

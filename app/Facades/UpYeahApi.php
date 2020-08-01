@@ -6,8 +6,12 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static self setToken(string $token)
- * @method static mixed accounts()
  * @method static mixed ping()
+ * @method static mixed accounts()
+ * @method static mixed account(string $uuid)
+ * @method static mixed transactions()
+ * @method static mixed transactionsById(string $uuid)
+ * @method static mixed transactionsByAccount(string $uuid)
  *
  * @see \App\Services\UpYeahApi
  */

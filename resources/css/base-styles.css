@@ -1,5 +1,5 @@
 main {
-  @apply bg-up h-screen gap-20 grid;
+  @apply bg-up h-screen gap-16 grid;
 
   grid-template-areas: 'header' 'body' 'footer';
   grid-template-rows: auto 1fr auto;

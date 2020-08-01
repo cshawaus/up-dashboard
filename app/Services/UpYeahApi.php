@@ -13,7 +13,7 @@ class UpYeahApi extends Http
      *
      * @var string
      */
-    protected $baseUrl = 'https://api.up.com.au/api/v1/';
+    protected $baseUrl = 'https://api.up.com.au/api/v1';
 
     /**
      * Tracks the number of requests left for the token.
@@ -28,10 +28,11 @@ class UpYeahApi extends Http
     /**
      * Send a request to the Up Yeah API.
      *
-     * @param  string  $uri
+     * @param  string  $url
+     * @param  array   $params
      * @return mixed
      */
-    private function makeRequest(string $uri)
+    private function makeRequest(string $url, array $params = [])
     {
         if ($this->token === null) {
             throw new ErrorException('The token provided cannot be used as it is invalid, please set a valid token.');
@@ -41,7 +42,7 @@ class UpYeahApi extends Http
             throw new ErrorException('Unable to make request as the rate limit has been reached.');
         }
 
-        $request = $this->withToken($this->token)->get($uri);
+        $request = $this->withToken($this->token)->get($url, $params);
 
         $this->requestLimit = intval($request->headers()['X-RateLimit-Remaining']);
 
@@ -64,17 +65,63 @@ class UpYeahApi extends Http
 
     /**
      * Check the health of the token to ensure that it is valid.
+     *
+     * @see https://developer.up.com.au/#get_util_ping
      */
     public function ping()
     {
-        return $this->makeRequest('util/ping');
+        return $this->makeRequest('/util/ping');
     }
 
     /**
      * Find and retrieve all of the accounts associated with the token.
+     *
+     * @see https://developer.up.com.au/#get_accounts
      */
     public function accounts()
     {
-        return $this->makeRequest('accounts');
+        return $this->makeRequest('/accounts');
+    }
+
+    /**
+     * Retrieve the account for the given UUID.
+     *
+     * @see https://developer.up.com.au/#get_accounts_id
+     */
+    public function account(string $uuid)
+    {
+        return $this->makeRequest(sprintf('/accounts/%s', $uuid));
+    }
+
+    /**
+     * Retrieve all transactions for entire up account.
+     *
+     * @see https://developer.up.com.au/#get_transactions
+     */
+    public function transactions()
+    {
+        return $this->makeRequest('/transactions');
+    }
+
+    /**
+     * Retrieve the transaction for the given UUID.
+     *
+     * @see https://developer.up.com.au/#get_transactions_id
+     */
+    public function transactionsById(string $uuid)
+    {
+        return $this->makeRequest(sprintf('/transactions/%s', $uuid));
+    }
+
+    /**
+     * Retrieve the account transactions for the given UUID.
+     *
+     * @see https://developer.up.com.au/#get_accounts_accountId_transactions
+     */
+    public function transactionsByAccount(string $uuid)
+    {
+        return $this->makeRequest(sprintf('/accounts/%s/transactions', $uuid), [
+            'page[size]' => 100,
+        ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Dashboard\AccountController;
+use App\Http\Controllers\Dashboard\OverviewController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\UpYeahTokenController;
 
@@ -36,7 +37,9 @@ Auth::routes([
 Route::name('dashboard.')
     ->middleware(['up.yeah.token', 'auth', 'verified'])
     ->group(function () {
-        Route::get('/', [DashboardController::class, 'overview'])->name('overview');
+        Route::get('/', [OverviewController::class, 'index'])->name('overview');
+
+        Route::get('/account/{uuid}', [AccountController::class, 'index'])->name('account');
     });
 
 /*

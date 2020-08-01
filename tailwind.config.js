@@ -1,3 +1,7 @@
+const {
+  variants,
+} = require('tailwindcss/defaultConfig')
+
 module.exports = {
   purge: [
     './resources/js/**/*.js',
@@ -13,6 +17,11 @@ module.exports = {
         'up'          : '#ff7a64',
       },
     },
+  },
+
+  variants: {
+    translate : [...variants.translate, 'group-hover'],
+    scale     : [...variants.scale, 'group-hover'],
   },
 
   plugins: [
