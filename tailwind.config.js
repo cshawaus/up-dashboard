@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         'offset-grey' : '#242430',
+        'yellow'      : '#ffef6b',
         'up'          : '#ff7a64',
       },
     },

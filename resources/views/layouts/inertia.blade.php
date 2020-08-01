@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-  <link rel="icon" type="image/png" href="{{ asset('images/up-yeah-logo.jpg') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
   <script src="{{ mix('/js/app.js') }}" defer></script>
 </head>
 <body>
