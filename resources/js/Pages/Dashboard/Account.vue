@@ -29,7 +29,7 @@
         </div>
         <div>
           <h3 class="font-bold text-2xl text-up">Transactions</h3>
-          <p>{{ transactionsCount }}</p>
+          <p>{{ transactions.total }}</p>
         </div>
         <div>
           <h3 class="font-bold text-2xl text-up">Open Since</h3>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <transactions title="Transactions" :transactions="transactions" />
+    <transactions title="Transactions" :meta="transactions" :transactions="transactions.data" />
   </layout>
 </template>
 
@@ -57,9 +57,8 @@ export default {
   },
 
   props: {
-    account           : Object,
-    transactions      : Array,
-    transactionsCount : Number,
+    account      : Object,
+    transactions : Object,
   },
 
   methods: {

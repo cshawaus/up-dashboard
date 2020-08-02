@@ -1,6 +1,32 @@
 <template>
-  <div>
-    <h2 class="bg-offset-grey font-bold inline-block mb-4 px-2 text-2xl text-up">{{ title }}</h2>
+  <div class="relative">
+    <div class="sticky top-0">
+      <div class="bg-up absolute h-full left-0 -mx-2 -mt-2 p-4 right-0 top-0"></div>
+
+      <div class="flex justify-between relative z-10">
+        <h2 class="bg-offset-grey font-bold inline-block mb-4 px-2 text-2xl text-up">{{ title }}</h2>
+
+        <div v-if="meta && meta.current_page">
+          <inertia-link
+            class="font-semibold text-yellow"
+            :href="meta.prev_page_url"
+            :only="['transactions']"
+            v-if="meta.current_page > 1 || meta.next_page_url === null"
+          >
+            Previous
+          </inertia-link>
+
+          <inertia-link
+            class="font-semibold ml-4 text-yellow"
+            :href="meta.next_page_url"
+            :only="['transactions']"
+            v-if="meta.current_page < meta.last_page"
+          >
+            Next
+          </inertia-link>
+        </div>
+      </div>
+    </div>
 
     <div class="space-y-1" v-if="transactions.length">
       <div
@@ -35,7 +61,7 @@
           <span>{{ amount | formatAmount }}</span>
         </div>
 
-        <div v-if="account.type === 'SAVER'">
+        <div v-if="account && account.type === 'SAVER'">
           <p class="font-bold">Sent to</p>
           <span class="text-sm">{{ account.name }}</span>
         </div>
@@ -55,6 +81,7 @@ export default {
   name: 'Transactions',
 
   props: {
+    meta         : Object,
     title        : String,
     transactions : Array,
   },
