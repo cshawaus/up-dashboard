@@ -6,6 +6,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -30,6 +31,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'up_yeah_token',
     ];
 
     /**
@@ -54,6 +56,14 @@ class User extends Authenticatable
      */
     public function accounts(): HasMany
     {
-        return $this->hasMany(Account::class);
+        return $this->HasMany(Account::class);
+    }
+
+    /**
+     * Get all of the transactions associated with the user.
+     */
+    public function transactions(): HasManyThrough
+    {
+        return $this->hasManyThrough(Transaction::class, Account::class);
     }
 }

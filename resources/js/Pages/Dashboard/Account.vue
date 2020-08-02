@@ -7,13 +7,13 @@
       Back to overview
     </button>
 
-    <div class="-mt-8 relative text-center z-10">
-      <h2 class="bg-yellow border-b border-up font-bold inline-block lowercase px-2 text-3xl text-up">
+    <div class="-mb-2 -mt-4 pr-4 relative text-right z-10">
+      <h2 class="bg-yellow border-b border-up font-bold inline-block lowercase px-2 text-2xl text-up">
         About <em>up</em> account
       </h2>
     </div>
 
-    <div class="bg-white mb-12 -mt-2 px-12 py-10 rounded shadow-md sticky top-0">
+    <div class="bg-white mb-12 px-12 py-10 rounded shadow-md">
       <div class="grid grid-cols-4 gap-10 text-xl">
         <div>
           <h3 class="font-bold text-2xl text-up">Type</h3>
@@ -25,11 +25,11 @@
         </div>
         <div>
           <h3 class="font-bold text-2xl text-up">Balance</h3>
-          <p>{{ account.balance | formatBalance }}</p>
+          <p>{{ account.balance | formatAmount }}</p>
         </div>
         <div>
           <h3 class="font-bold text-2xl text-up">Transactions</h3>
-          <p>{{ transactions.length }}</p>
+          <p>{{ transactionsCount }}</p>
         </div>
         <div>
           <h3 class="font-bold text-2xl text-up">Open Since</h3>
@@ -38,15 +38,7 @@
       </div>
     </div>
 
-    <h2 class="font-bold mb-4 text-4xl text-yellow">Transactions</h2>
-    <!-- <div class="space-y-1">
-      <div
-        class="bg-white px-12 py-5 rounded shadow"
-        v-for="({ attributes, id }) in transactions.data" :key="id"
-      >
-        <span class="font-semibold">{{ attributes.description }}</span>
-      </div>
-    </div> -->
+    <transactions title="Transactions" :transactions="transactions" />
   </layout>
 </template>
 
@@ -54,17 +46,20 @@
 import { format } from 'date-fns'
 
 import Layout from '../Layout'
+import Transactions from '../../components/Transactions'
 
 export default {
   name: 'DashboardAccount',
 
   components: {
     Layout,
+    Transactions,
   },
 
   props: {
-    account      : Object,
-    transactions : Array,
+    account           : Object,
+    transactions      : Array,
+    transactionsCount : Number,
   },
 
   methods: {

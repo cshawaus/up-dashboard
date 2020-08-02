@@ -8,27 +8,29 @@
       <h2 class="bg-yellow font-bold inline-block mb-12 px-2 text-3xl text-up">Accounts &amp; Savers</h2>
     </div>
 
-    <div class="grid grid-cols-4 gap-8">
+    <div class="grid grid-cols-4 gap-4 mb-12">
       <div
-        class="bg-white cursor-pointer duration-200 ease-in-out px-10 py-8 relative rounded-lg shadow-md transform transition hover:scale-110 hover:shadow-xl"
-        v-for="account in accounts"
-        :key="account.identifier"
-        @click="navigateToAccount(account.identifier)"
+        class="bg-white cursor-pointer duration-200 ease-in-out px-10 py-8 relative rounded-lg shadow-md transform transition hover:scale-105 hover:shadow-xl"
+        v-for="({ balance, identifier, name, type, updated_at }) in accounts"
+        :key="identifier"
+        @click="navigateToAccount(identifier)"
       >
         <span
           class="absolute right-0 text-2xl top-0 transform -translate-x-5 translate-y-3"
-          v-if="account.type === 'SAVER'"
+          v-if="type === 'SAVER'"
         >
           ⚡
         </span>
 
-        <h2 class="font-bold text-lg">{{ account.name }}</h2>
-        <p>{{ account.balance | formatBalance }}</p>
-        <p class="text-xs">
-          <strong>Updated:</strong> {{ account.updated_at | lastUpdatedDate }}
+        <h3 class="font-bold text-lg truncate">{{ name }}</h3>
+        <p class="mb-1">{{ balance | formatAmount }}</p>
+        <p class="text-gray-600 text-xs">
+          <strong>Updated:</strong> {{ updated_at | lastUpdatedDate }}
         </p>
       </div>
     </div>
+
+    <transactions title="Last 5 Transactions" :transactions="transactions" />
   </layout>
 </template>
 
@@ -36,16 +38,19 @@
 import { format } from 'date-fns'
 
 import Layout from '../Layout'
+import Transactions from '../../components/Transactions'
 
 export default {
   name: 'DashboardOverview',
 
   components: {
     Layout,
+    Transactions,
   },
 
   props: {
-    accounts: Array,
+    accounts     : Array,
+    transactions : Array,
   },
 
   methods: {
@@ -55,7 +60,7 @@ export default {
   },
 
   filters: {
-    lastUpdatedDate: (value) => format(new Date(value), 'MMMM dd, yyyy'),
+    lastUpdatedDate: (value) => format(new Date(value), 'MMM dd, yyyy – h:mm aaa'),
   },
 }
 </script>

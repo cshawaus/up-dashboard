@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name')->index();
             $table->uuid('identifier');
-            $table->dateTimeTz('created');
+            $table->string('created', 40);
             $table->string('type');
             $table->decimal('balance');
             $table->string('currency_code', 4);

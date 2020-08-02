@@ -10,7 +10,16 @@ const currencyFormatter = new Intl.NumberFormat('en-AU', {
   style    : 'currency',
 })
 
-Vue.filter('formatBalance', (value) => currencyFormatter.format(parseFloat(value)))
+function rand(min, max) {
+  const randomNum = Math.random() * (max - min) + min
+
+  return Math.round(randomNum)
+}
+
+Vue.filter('formatAmount', (value) => {
+  return currencyFormatter.format(parseFloat(value))
+  return currencyFormatter.format(parseFloat(value) + rand(100, 2000))
+})
 
 const app = document.getElementById('app')
 

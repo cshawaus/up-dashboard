@@ -13,7 +13,6 @@ use Whoops\Exception\ErrorException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -82,7 +81,7 @@ class UpYeahTokenController extends Controller
                 array_push($accountsToCreate, [
                     'name'          => $account['attributes']['displayName'],
                     'identifier'    => $account['id'],
-                    'created'       => Carbon::parse($account['attributes']['createdAt']),
+                    'created'       => $account['attributes']['createdAt'],
                     'type'          => $account['attributes']['accountType'],
                     'balance'       => floatval($account['attributes']['balance']['value']),
                     'currency_code' => $account['attributes']['balance']['currencyCode'],

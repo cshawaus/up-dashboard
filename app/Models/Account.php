@@ -16,6 +16,13 @@ class Account extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [];
+
+    /**
      * User account that this up account is associated with.
      */
     public function user(): BelongsTo

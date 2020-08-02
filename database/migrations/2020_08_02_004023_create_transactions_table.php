@@ -19,14 +19,14 @@ class CreateTransactionsTable extends Migration
             $table->string('description')->index();
             $table->text('message')->nullable();
             $table->uuid('identifier');
-            $table->dateTimeTz('created');
-            $table->dateTimeTz('settled')->nullable();
-            $table->string('type');
-            $table->json('hold_info');
+            $table->string('created', 40);
+            $table->string('settled', 40)->nullable();
+            $table->string('status');
+            $table->json('hold_info')->nullable();
             $table->decimal('amount');
             $table->string('currency_code', 4);
-            $table->boolean('round_up')->nullable();
-            $table->boolean('cashback')->nullable();
+            $table->json('round_up')->nullable();
+            $table->json('cashback')->nullable();
             $table->timestamps();
         });
     }
