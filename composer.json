@@ -20,6 +20,7 @@
         "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.3",
         "barryvdh/laravel-ide-helper": "^v2.7.0",
         "facade/ignition": "^2.3.4",
         "fzaninotto/faker": "^v1.9.1",

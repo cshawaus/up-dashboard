@@ -3,27 +3,31 @@
     <div class="sticky top-0">
       <div class="bg-up absolute h-full left-0 -mx-2 -mt-2 p-4 right-0 top-0"></div>
 
-      <div class="flex justify-between relative z-10">
+      <div class="flex items-center justify-between relative z-10">
         <h2 class="bg-offset-grey font-bold inline-block mb-4 px-2 text-2xl text-up">{{ title }}</h2>
 
-        <div v-if="meta && meta.current_page">
+        <div class="mb-4 text-right" v-if="meta && meta.current_page">
           <inertia-link
-            class="font-semibold text-yellow"
+            class="duration-200 ease-in-out font-semibold text-yellow transition-colors hover:text-offset-grey"
             :href="meta.prev_page_url"
             :only="['transactions']"
-            v-if="meta.current_page > 1 || meta.next_page_url === null"
+            v-if="meta.current_page > 1"
           >
             Previous
           </inertia-link>
 
           <inertia-link
-            class="font-semibold ml-4 text-yellow"
+            class="duration-200 ease-in-out font-semibold ml-4 text-yellow transition-colors hover:text-offset-grey"
             :href="meta.next_page_url"
             :only="['transactions']"
             v-if="meta.current_page < meta.last_page"
           >
             Next
           </inertia-link>
+
+          <div class="text-xs w-full">
+            Showing page <strong>{{ meta.current_page }}</strong> of <strong>{{ meta.last_page }}</strong>
+          </div>
         </div>
       </div>
     </div>

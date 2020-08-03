@@ -21,17 +21,18 @@ class OverviewController extends Controller
         /** @var User */
         $user = Auth::user();
 
+        $user->load([
+            'accounts',
+            'transactions' => fn ($query) => $query->orderBy('transactions.created_at', 'asc')->take(5),
+            'transactions.account',
+        ]);
+
         // TODO: Migrate this process to a job
         if ($user->transactions->count() === 0) {
             UpYeahApi::setToken($user->getToken());
 
             $this->getTransactions($user);
         }
-
-        $user->load([
-            'transactions' => fn ($query) => $query->orderBy('transactions.created_at', 'asc')->take(5),
-            'transactions.account',
-        ]);
 
         return Inertia::render('Dashboard/Overview', [
             'accounts'     => $user->accounts,
