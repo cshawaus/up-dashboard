@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed ping()
  * @method static mixed accounts()
  * @method static mixed account(string $uuid)
- * @method static mixed transactions(int $pageSize = 100, \App\Models\Transaction $paginateFrom = null)
+ * @method static mixed transactions(int $pageSize = 100, string $paginateFrom = null)
  * @method static mixed transactionsById(string $uuid)
- * @method static mixed transactionsByAccount(string $uuid, int $pageSize = 100, \App\Models\Transaction $paginateFrom = null)
+ * @method static mixed transactionsByAccount(string $uuid, int $pageSize = 100, string $paginateFrom = null)
  *
  * @see \App\Services\UpYeahApi
  */

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Account;
+
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Auth\MustVerifyEmail;
@@ -56,7 +58,7 @@ class User extends Authenticatable
      */
     public function accounts(): HasMany
     {
-        return $this->HasMany(Account::class);
+        return $this->hasMany(Account::class);
     }
 
     /**

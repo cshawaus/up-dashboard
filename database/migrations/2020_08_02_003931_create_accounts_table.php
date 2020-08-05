@@ -19,10 +19,11 @@ class CreateAccountsTable extends Migration
             $table->string('name')->index();
             $table->uuid('identifier');
             $table->string('created', 40);
-            $table->string('type');
+            $table->enum('type', ['TRANSACTIONAL', 'SAVER']);
             $table->decimal('balance');
             $table->string('currency_code', 4);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

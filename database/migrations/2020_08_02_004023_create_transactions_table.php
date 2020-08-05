@@ -15,7 +15,16 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+
+            $table->foreignId('account_id')
+                ->nullable()
+                ->constrained('accounts')
+                ->onDelete('cascade');
+
             $table->string('description')->index();
             $table->text('message')->nullable();
             $table->uuid('identifier');

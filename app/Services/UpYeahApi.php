@@ -4,8 +4,6 @@ namespace App\Services;
 
 use Exception;
 
-use App\Models\Transaction;
-
 use Whoops\Exception\ErrorException;
 
 use Illuminate\Http\Client\PendingRequest as Http;
@@ -60,11 +58,21 @@ class UpYeahApi extends Http
     /**
      * Generate a base set of parameters for every request.
      */
-    private function generateParams(int $pageSize): array
+    private function generateParams(int $pageSize, string $paginateFrom = null): array
     {
-        return [
+        $params = [
             'page[size]' => $pageSize,
         ];
+
+        if ($paginateFrom !== null) {
+            $url = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
+                return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
+            }, $paginateFrom);
+
+            return explode('&', parse_url($url, PHP_URL_QUERY));
+        }
+
+        return $params;
     }
 
     /**
@@ -112,21 +120,9 @@ class UpYeahApi extends Http
      *
      * @see https://developer.up.com.au/#get_transactions
      */
-    public function transactions(int $pageSize = 100, Transaction $paginateFrom = null)
+    public function transactions(int $pageSize = 100, string $paginateFrom = null)
     {
-        $params = $this->generateParams($pageSize);
-
-        if ($paginateFrom !== null) {
-            if ($paginateFrom->exists === false) {
-                throw new Exception('Pagination could not be constructed as the transaction model is invalid.');
-            }
-
-            $params['page[after]'] = base64_encode(sprintf(
-                '["%s","%s"]',
-                $paginateFrom->created,
-                $paginateFrom->identifier,
-            ));
-        }
+        $params = $this->generateParams($pageSize, $paginateFrom);
 
         return $this->makeRequest('/transactions', $params);
     }
@@ -146,21 +142,9 @@ class UpYeahApi extends Http
      *
      * @see https://developer.up.com.au/#get_accounts_accountId_transactions
      */
-    public function transactionsByAccount(string $uuid, int $pageSize = 100, Transaction $paginateFrom = null)
+    public function transactionsByAccount(string $uuid, int $pageSize = 100, string $paginateFrom = null)
     {
-        $params = $this->generateParams($pageSize);
-
-        if ($paginateFrom !== null) {
-            if ($paginateFrom->exists === false) {
-                throw new Exception('Pagination could not be constructed as the transaction model is invalid.');
-            }
-
-            $params['page[after]'] = base64_encode(sprintf(
-                '["%s","%s"]',
-                $paginateFrom->created,
-                $paginateFrom->identifier,
-            ));
-        }
+        $params = $this->generateParams($pageSize, $paginateFrom);
 
         return $this->makeRequest(sprintf('/accounts/%s/transactions', $uuid), $params);
     }

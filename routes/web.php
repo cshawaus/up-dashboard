@@ -49,7 +49,7 @@ Route::name('dashboard.')
 */
 
 Route::name('user.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'permission:assign token'])
     ->group(function () {
         Route::get('set-token', [UpYeahTokenController::class, 'index'])->name('set-token');
         Route::post('set-token', [UpYeahTokenController::class, 'finish'])->name('set-token-finish');

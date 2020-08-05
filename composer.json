@@ -17,6 +17,7 @@
         "laravel/horizon": "^4.3",
         "laravel/tinker": "^v2.4.1",
         "laravel/ui": "^v2.1.0",
+        "predis/predis": "^1.1",
         "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {

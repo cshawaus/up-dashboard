@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Exception;
 
 use App\Facades\UpYeahApi;
+use App\Jobs\RequestTransactions;
+use App\Jobs\UpdateAccounts;
 use App\Models\User;
 
 use Inertia\Inertia;
-use Whoops\Exception\ErrorException;
 
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -38,9 +39,9 @@ class UpYeahTokenController extends Controller
                 if ($this->testTokenWithPing($token)) {
                     $user = Auth::user();
 
-                    $this->retrieveAccountsForToken($user, $token);
-
                     $this->updateTokenForUser($user, $token);
+
+                    $this->retrieveAccountsAndTransactions($user);
                 }
 
                 return Redirect::route('login');
@@ -61,35 +62,20 @@ class UpYeahTokenController extends Controller
             $response = UpYeahApi::setToken($token)->ping();
 
             if (Arr::exists($response, 'errors')) {
-                throw new ErrorException('Invalid token supplied!');
+                throw new Exception('Invalid token supplied!');
             }
         } catch (RequestException $ex) {
-            throw new ErrorException('Unable to contact up ping API!');
+            throw new Exception('Unable to contact up ping API!');
         }
 
         return true;
     }
 
-    private function retrieveAccountsForToken(User $user, string $token)
+    private function retrieveAccountsAndTransactions(User $user)
     {
-        $accounts = UpYeahApi::setToken($token)->accounts();
-
-        if (Arr::exists($accounts, 'data')) {
-            $accountsToCreate = [];
-
-            foreach ($accounts['data'] as $account) {
-                array_push($accountsToCreate, [
-                    'name'          => $account['attributes']['displayName'],
-                    'identifier'    => $account['id'],
-                    'created'       => $account['attributes']['createdAt'],
-                    'type'          => $account['attributes']['accountType'],
-                    'balance'       => floatval($account['attributes']['balance']['value']),
-                    'currency_code' => $account['attributes']['balance']['currencyCode'],
-                ]);
-            }
-
-            $user->accounts()->createMany($accountsToCreate);
-        }
+        UpdateAccounts::dispatch($user)->chain([
+            new RequestTransactions($user),
+        ]);
     }
 
     private function updateTokenForUser(User $user, string $token)

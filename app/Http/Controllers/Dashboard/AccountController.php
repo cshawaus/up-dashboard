@@ -13,7 +13,7 @@ class AccountController extends Controller
     {
         return Inertia::render('Dashboard/Account', [
             'account'      => $account->withoutRelations(),
-            'transactions' => $account->transactions()->getQuery()->paginate(30),
+            'transactions' => $account->transactions()->paginate(30),
         ]);
     }
 }
