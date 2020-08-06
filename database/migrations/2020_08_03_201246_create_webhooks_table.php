@@ -15,6 +15,11 @@ class CreateWebhooksTable extends Migration
     {
         Schema::create('webhooks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->uuid('identifier');
+            $table->text('description');
+            $table->text('secret_key');
+            $table->timestamp('last_requested');
             $table->timestamps();
         });
     }
@@ -26,6 +31,10 @@ class CreateWebhooksTable extends Migration
      */
     public function down()
     {
+        Schema::table('webhooks', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+
         Schema::dropIfExists('webhooks');
     }
 }

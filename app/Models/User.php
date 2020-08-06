@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Account;
-
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Auth\MustVerifyEmail;
@@ -75,5 +73,13 @@ class User extends Authenticatable
     public function transactionsWithAccount(): HasManyThrough
     {
         return $this->hasManyThrough(Transaction::class, Account::class);
+    }
+
+    /**
+     * Get all of the up webhooks associated to the user.
+     */
+    public function webhooks(): HasMany
+    {
+        return $this->hasMany(Webhook::class);
     }
 }

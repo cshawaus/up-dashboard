@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\OverviewController;
+
+use App\Http\Controllers\Webhooks\IndexController;
+use App\Http\Controllers\Webhooks\InboundController;
+
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\UpYeahTokenController;
 
@@ -53,6 +57,23 @@ Route::name('user.')
     ->group(function () {
         Route::get('set-token', [UpYeahTokenController::class, 'index'])->name('set-token');
         Route::post('set-token', [UpYeahTokenController::class, 'finish'])->name('set-token-finish');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Webhooks
+|--------------------------------------------------------------------------
+*/
+
+Route::name('webhooks.')
+    ->prefix('webhooks')
+    ->group(function () {
+        Route::get('/', [IndexController::class, 'index'])
+            ->middleware(['auth', 'verified'])
+            ->name('index');
+
+        Route::get('/inbound/{user}/{webhook}', [InboundController::class, 'receive'])
+            ->name('inbound');
     });
 
 /*

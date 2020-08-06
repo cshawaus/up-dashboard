@@ -1,11 +1,16 @@
 <template>
   <main>
     <header class="bg-offset-grey border-b-2 border-opacity-50 border-up py-6 sticky top-0">
-      <div class="container flex items-center justify-between mx-auto">
-        <div class="text-white">
+      <div class="container flex items-center mx-auto">
+        <div class="mr-auto text-white">
           <h1 class="font-semibold leading-snug text-3xl text-up">{{ title }}</h1>
           <slot name="header-content" />
         </div>
+
+        <nav class="mr-10 space-x-6">
+          <inertia-link class="duration-200 ease-in-out text-white transition-colors hover:text-yellow" href="/">Overview</inertia-link>
+          <inertia-link class="duration-200 ease-in-out text-white transition-colors hover:text-yellow" href="/webhooks">Webhooks</inertia-link>
+        </nav>
 
         <svg class="fill-current text-up" viewBox="0 0 60 57" width="110" height="62" fill="none">
           <g id="up-yeah-logo">
