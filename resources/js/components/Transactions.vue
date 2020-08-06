@@ -34,10 +34,10 @@
 
     <div class="space-y-1" v-if="transactions.length">
       <div
-        class="bg-white gap-4 grid grid-cols-3 grid-flow-col-dense px-8 py-5 rounded shadow"
+        class="bg-white gap-4 grid grid-cols-4 grid-flow-col-dense px-8 py-5 rounded shadow"
         v-for="({ account, amount, description, identifier, message, round_up, status }) in transactions" :key="identifier"
       >
-        <div class="flex items-center">
+        <div class="col-span-2 flex items-center">
           <div class="flex-shrink-0 w-16">
             <svg class="h-10 text-offset-grey w-10" fill="currentColor" viewBox="0 0 20 20">
               <template v-if="status === 'HELD'">

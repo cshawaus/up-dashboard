@@ -27,6 +27,7 @@ class CreateTransactionsTable extends Migration
 
             $table->string('description')->index();
             $table->text('message')->nullable();
+            $table->text('raw_text')->nullable();
             $table->uuid('identifier');
             $table->string('created', 40);
             $table->string('settled', 40)->nullable();
@@ -34,6 +35,8 @@ class CreateTransactionsTable extends Migration
             $table->json('hold_info')->nullable();
             $table->decimal('amount');
             $table->string('currency_code', 4);
+            $table->decimal('amount_foreign')->nullable();
+            $table->string('currency_code_foreign', 4)->nullable();
             $table->json('round_up')->nullable();
             $table->json('cashback')->nullable();
             $table->timestamps();

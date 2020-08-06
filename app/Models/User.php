@@ -64,7 +64,15 @@ class User extends Authenticatable
     /**
      * Get all of the transactions associated with the user.
      */
-    public function transactions(): HasManyThrough
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Get all of the transactions associated with the user that are also associated with an account.
+     */
+    public function transactionsWithAccount(): HasManyThrough
     {
         return $this->hasManyThrough(Transaction::class, Account::class);
     }

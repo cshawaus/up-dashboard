@@ -52,6 +52,7 @@ class HandleTransactions implements ShouldQueue
             'user_id'       => $this->user->id,
             'description'   => $transaction['attributes']['description'],
             'message'       => $transaction['attributes']['message'],
+            'raw_text'      => $transaction['attributes']['rawText'],
             'identifier'    => $transaction['id'],
             'created'       => $transaction['attributes']['createdAt'],
             'settled'       => $transaction['attributes']['settledAt'],
@@ -64,6 +65,11 @@ class HandleTransactions implements ShouldQueue
             'created_at'    => $createdDate,
             'updated_at'    => $createdDate,
         ];
+
+        if (is_array($transaction['attributes']['foreignAmount'])) {
+            $data['amount_foreign']        = floatval($transaction['attributes']['foreignAmount']['value']);
+            $data['currency_code_foreign'] = $transaction['attributes']['foreignAmount']['currencyCode'];
+        }
 
         /** @var \App\Models\Account */
         $account = $this->accounts->firstWhere('identifier', '=', $accountUUID);

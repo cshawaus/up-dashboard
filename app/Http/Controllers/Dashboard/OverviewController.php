@@ -24,7 +24,7 @@ class OverviewController extends Controller
 
         $user->load([
             'accounts',
-            'transactions' => fn ($query) => $query->take(5),
+            'transactions' => fn ($query) => $query->orderBy('created_at', 'desc')->take(5),
             'transactions.account',
         ]);
 
