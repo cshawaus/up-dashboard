@@ -4,9 +4,8 @@ namespace App\Services;
 
 use Exception;
 
-use Whoops\Exception\ErrorException;
-
 use Illuminate\Http\Client\PendingRequest as Http;
+use Illuminate\Support\Facades\Log;
 
 class UpYeahApi extends Http
 {
@@ -37,11 +36,11 @@ class UpYeahApi extends Http
     private function makeRequest(string $url, array $params = [])
     {
         if ($this->token === null) {
-            throw new ErrorException('The token provided cannot be used as it is invalid, please set a valid token.');
+            throw new Exception('The token provided cannot be used as it is invalid, please set a valid token.');
         }
 
         if ($this->requestLimit === 0) {
-            throw new ErrorException('Unable to make request as the rate limit has been reached.');
+            throw new Exception('Unable to make request as the rate limit has been reached.');
         }
 
         $request = $this->withToken($this->token)->get($url, $params);
@@ -67,9 +66,13 @@ class UpYeahApi extends Http
         if ($paginateFrom !== null) {
             $url = preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/', function ($match) {
                 return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
-            }, $paginateFrom);
+            }, urldecode($paginateFrom));
 
-            return explode('&', parse_url($url, PHP_URL_QUERY));
+            $parsedParams = [];
+            parse_str(parse_url($url, PHP_URL_QUERY), $parsedParams);
+
+            $params['page[after]'] = $parsedParams['page']['after'];
+            $params['page[size]']  = $parsedParams['page']['size'];
         }
 
         return $params;

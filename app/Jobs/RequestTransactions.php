@@ -37,19 +37,24 @@ class RequestTransactions implements ShouldQueue
             ->transactions(100, $this->paginateFrom);
 
         if (Arr::exists($transactions, 'data')) {
-            HandleTransactions::dispatch($this->user, $transactions['data']);
+            $chains = [];
 
             if ($transactions['links']['next'] !== null) {
-                static::dispatch($this->user, $transactions['links']['next']);
+                array_push($chains, new RequestTransactions(
+                    $this->user,
+                    $transactions['links']['next']
+                ));
             }
+
+            HandleTransactions::dispatch($this->user, $transactions['data'])->chain($chains);
         }
     }
 
     public function failed(Exception $exception)
     {
         Log::error('Unable to get transactions!', [
-            $exception->getMessage(),
             $this->user->id,
+            $exception->getMessage(),
         ]);
     }
 }

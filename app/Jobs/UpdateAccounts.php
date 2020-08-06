@@ -66,8 +66,8 @@ class UpdateAccounts implements ShouldQueue
     public function failed(Exception $exception)
     {
         Log::error('Unable to get accounts!', [
-            $exception->getMessage(),
             $this->user->id,
+            $exception->getMessage(),
         ]);
     }
 }

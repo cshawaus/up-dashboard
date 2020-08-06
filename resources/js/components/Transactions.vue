@@ -55,8 +55,8 @@
 
           <div>
             <span class="font-semibold">{{ description }}</span>
-            <p class="text-gray-600 text-sm">
-              <strong>Message:</strong> {{ message || 'n/a' }}
+            <p class="text-gray-600 text-sm" v-if="message">
+              <strong>Message:</strong> {{ message }}
             </p>
           </div>
         </div>

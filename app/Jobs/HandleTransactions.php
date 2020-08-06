@@ -83,8 +83,8 @@ class HandleTransactions implements ShouldQueue
     public function failed(Exception $exception)
     {
         Log::error('Unable to save transactions!', [
-            $exception->getMessage(),
             $this->user->id,
+            $exception->getMessage(),
         ]);
     }
 }
