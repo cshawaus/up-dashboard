@@ -35,7 +35,17 @@
     <div class="space-y-1" v-if="transactions.length">
       <div
         class="bg-white gap-4 grid grid-cols-4 grid-flow-col-dense px-8 py-5 rounded shadow"
-        v-for="({ account, amount, description, identifier, message, round_up, status }) in transactions" :key="identifier"
+        v-for="({
+          account,
+          amount,
+          amount_foreign,
+          currency_code_foreign,
+          description,
+          identifier,
+          message,
+          round_up,
+          status,
+        }) in transactions" :key="identifier"
       >
         <div class="col-span-2 flex items-center">
           <div class="flex-shrink-0 w-16">
@@ -73,6 +83,10 @@
             </svg>
 
             +{{ round_up.amount.value | absoluteValue | formatAmount }}
+          </div>
+
+          <div class="flex font-semibold items-center text-gray-600 text-xs" v-if="amount_foreign">
+            {{ amount_foreign }} ({{ currency_code_foreign }})
           </div>
         </div>
 
