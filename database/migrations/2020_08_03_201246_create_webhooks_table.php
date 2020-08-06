@@ -19,7 +19,7 @@ class CreateWebhooksTable extends Migration
             $table->uuid('identifier');
             $table->text('description');
             $table->text('secret_key');
-            $table->timestamp('last_requested');
+            $table->timestamp('last_requested')->nullable();
             $table->timestamps();
         });
     }

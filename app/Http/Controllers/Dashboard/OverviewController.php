@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\UpdateAccounts;
-use App\Models\User;
 
 use Inertia\Inertia;
 
@@ -15,7 +14,7 @@ class OverviewController extends Controller
 {
     public function index(Request $request)
     {
-        /** @var User */
+        /** @var \App\Models\User */
         $user = Auth::user();
 
         if ($request->boolean('updateAccounts', false) === true) {

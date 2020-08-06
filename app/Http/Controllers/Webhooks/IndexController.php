@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Webhooks;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 
 use Inertia\Inertia;
 
@@ -13,7 +12,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        /** @var User */
+        /** @var \App\Models\User */
         $user = Auth::user();
 
         return Inertia::render('Webhooks/Index', [
