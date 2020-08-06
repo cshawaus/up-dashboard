@@ -30,7 +30,7 @@ class CreateTransactionsTable extends Migration
             $table->uuid('identifier');
             $table->string('created', 40);
             $table->string('settled', 40)->nullable();
-            $table->string('status');
+            $table->enum('status', ['HELD', 'SETTLED']);
             $table->json('hold_info')->nullable();
             $table->decimal('amount');
             $table->string('currency_code', 4);
